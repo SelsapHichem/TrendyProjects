@@ -121,6 +121,19 @@ const TrendResults = ({ trends, formData }) => {
                       </span>
                     </div>
                   </div>
+                  
+                  {/* Additional trend details */}
+                  <div className="mt-3 flex items-center space-x-4 text-xs text-gray-500">
+                    <span>🔥 Trending in {formData?.country || 'Global'}</span>
+                    <span>📈 {Math.floor(Math.random() * 50) + 10}K mentions</span>
+                    <span>⏱️ Peak: {Math.floor(Math.random() * 24)}h ago</span>
+                  </div>
+                </div>
+                
+                <div className="ml-4">
+                  <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                    Analyze
+                  </button>
                 </div>
               </div>
             </div>

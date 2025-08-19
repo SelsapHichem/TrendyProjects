@@ -3,6 +3,10 @@ import TrendAnalyzer from './TrendAnalyzer';
 import TrendResults from './TrendResults';
 import ProjectGenerator from './ProjectGenerator';
 import DatabaseSchema from './DatabaseSchema';
+import ProjectExport from './ProjectExport';
+import AnalyticsPage from './AnalyticsPage';
+import SettingsPage from './SettingsPage';
+import ReportsPage from './ReportsPage';
 import { TrendingUp, Target, Database, Lightbulb } from 'lucide-react';
 
 const Dashboard = () => {
@@ -10,6 +14,7 @@ const Dashboard = () => {
   const [analyzedTrends, setAnalyzedTrends] = useState(null);
   const [formData, setFormData] = useState(null);
   const [generatedProjects, setGeneratedProjects] = useState(null);
+  const [currentPage, setCurrentPage] = useState('dashboard');
 
   const handleTrendAnalyzed = (trends, data) => {
     setAnalyzedTrends(trends);
@@ -22,6 +27,28 @@ const Dashboard = () => {
     setCurrentStep(3);
   };
 
+  // Handle page navigation from sidebar
+  React.useEffect(() => {
+    const handlePageChange = (event) => {
+      setCurrentPage(event.detail.page);
+    };
+    
+    window.addEventListener('pageChange', handlePageChange);
+    return () => window.removeEventListener('pageChange', handlePageChange);
+  }, []);
+
+  // Render different pages based on currentPage
+  if (currentPage === 'analytics') {
+    return <AnalyticsPage trends={analyzedTrends} formData={formData} projects={generatedProjects} />;
+  }
+  
+  if (currentPage === 'reports') {
+    return <ReportsPage trends={analyzedTrends} formData={formData} projects={generatedProjects} />;
+  }
+  
+  if (currentPage === 'settings') {
+    return <SettingsPage />;
+  }
   const steps = [
     { id: 1, name: 'Setup & Analysis', icon: TrendingUp, description: 'Configure parameters and analyze trends' },
     { id: 2, name: 'Trend Results', icon: Target, description: 'Review identified trends and market data' },
@@ -150,6 +177,14 @@ const Dashboard = () => {
         />
       )}
 
+      {/* Export Component - Show when projects are generated */}
+      {generatedProjects && generatedProjects.length > 0 && currentStep >= 3 && (
+        <ProjectExport 
+          projects={generatedProjects}
+          trends={analyzedTrends}
+          formData={formData}
+        />
+      )}
       {/* Features Overview - Only show initially */}
       {currentStep === 1 && !analyzedTrends && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

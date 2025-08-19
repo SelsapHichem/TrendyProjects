@@ -227,6 +227,28 @@ const ProjectGenerator = ({ trends, formData }) => {
                   </div>
                 </div>
               </div>
+              
+              {/* Project Actions */}
+              <div className="mt-6 pt-4 border-t border-gray-200">
+                <div className="flex items-center justify-between">
+                  <div className="flex space-x-2">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      High Viability
+                    </span>
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      {formData?.complexity || 'Medium'} Complexity
+                    </span>
+                  </div>
+                  <div className="flex space-x-2">
+                    <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                      View Details
+                    </button>
+                    <button className="text-sm text-green-600 hover:text-green-800 font-medium">
+                      Start Project
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>

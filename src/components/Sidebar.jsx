@@ -12,20 +12,24 @@ import {
   Brain
 } from 'lucide-react';
 
-const Sidebar = () => {
+const Sidebar = ({ onPageChange }) => {
   const menuItems = [
-    { icon: TrendingUp, label: 'Trend Analysis', active: true },
-    { icon: Target, label: 'Market Research' },
-    { icon: Lightbulb, label: 'Project Generator' },
-    { icon: Database, label: 'Schema Design' },
-    { icon: BarChart3, label: 'Analytics' },
-    { icon: Globe, label: 'Global Markets' },
-    { icon: Users, label: 'Audiences' },
-    { icon: Brain, label: 'AI Insights' },
-    { icon: FileText, label: 'Reports' },
-    { icon: Settings, label: 'Settings' },
+    { icon: TrendingUp, label: 'Trend Analysis', page: 'dashboard', active: true },
+    { icon: Target, label: 'Market Research', page: 'dashboard' },
+    { icon: Lightbulb, label: 'Project Generator', page: 'dashboard' },
+    { icon: Database, label: 'Schema Design', page: 'dashboard' },
+    { icon: BarChart3, label: 'Analytics', page: 'analytics' },
+    { icon: Globe, label: 'Global Markets', page: 'dashboard' },
+    { icon: Users, label: 'Audiences', page: 'dashboard' },
+    { icon: Brain, label: 'AI Insights', page: 'dashboard' },
+    { icon: FileText, label: 'Reports', page: 'reports' },
+    { icon: Settings, label: 'Settings', page: 'settings' },
   ];
 
+  const handleMenuClick = (page) => {
+    // Dispatch custom event for page change
+    window.dispatchEvent(new CustomEvent('pageChange', { detail: { page } }));
+  };
   return (
     <aside className="w-64 bg-white shadow-sm border-r border-gray-200">
       <div className="p-4">
@@ -44,6 +48,10 @@ const Sidebar = () => {
             <a
               key={index}
               href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleMenuClick(item.page);
+              }}
               className={`flex items-center px-3 py-2 mt-1 text-sm font-medium rounded-lg transition-colors ${
                 item.active
                   ? 'bg-blue-100 text-blue-700'
@@ -62,6 +70,10 @@ const Sidebar = () => {
             <a
               key={index + 4}
               href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleMenuClick(item.page);
+              }}
               className="flex items-center px-3 py-2 mt-1 text-sm font-medium rounded-lg transition-colors text-gray-600 hover:bg-gray-100 hover:text-gray-900"
             >
               <item.icon className="w-5 h-5 mr-3" />
