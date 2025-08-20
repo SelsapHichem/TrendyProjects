@@ -12,24 +12,36 @@ import {
   Brain
 } from 'lucide-react';
 
-const Sidebar = ({ onPageChange }) => {
+const Sidebar = () => {
   const menuItems = [
-    { icon: TrendingUp, label: 'Trend Analysis', page: 'dashboard', active: true },
-    { icon: Target, label: 'Market Research', page: 'dashboard' },
+    { icon: TrendingUp, label: 'Dashboard', page: 'dashboard', active: true },
+    { icon: Target, label: 'Trend Analysis', page: 'dashboard' },
     { icon: Lightbulb, label: 'Project Generator', page: 'dashboard' },
-    { icon: Database, label: 'Schema Design', page: 'dashboard' },
+    { icon: Database, label: 'Database Schema', page: 'dashboard' },
     { icon: BarChart3, label: 'Analytics', page: 'analytics' },
-    { icon: Globe, label: 'Global Markets', page: 'dashboard' },
-    { icon: Users, label: 'Audiences', page: 'dashboard' },
-    { icon: Brain, label: 'AI Insights', page: 'dashboard' },
+    { icon: Globe, label: 'Market Insights', page: 'analytics' },
+    { icon: Users, label: 'User Management', page: 'settings' },
+    { icon: Brain, label: 'AI Insights', page: 'analytics' },
     { icon: FileText, label: 'Reports', page: 'reports' },
     { icon: Settings, label: 'Settings', page: 'settings' },
   ];
 
+  const [activePage, setActivePage] = React.useState('dashboard');
+
+  React.useEffect(() => {
+    const handlePageChange = (event) => {
+      setActivePage(event.detail.page);
+    };
+    
+    window.addEventListener('pageChange', handlePageChange);
+    return () => window.removeEventListener('pageChange', handlePageChange);
+  }, []);
+
   const handleMenuClick = (page) => {
-    // Dispatch custom event for page change
+    setActivePage(page);
     window.dispatchEvent(new CustomEvent('pageChange', { detail: { page } }));
   };
+
   return (
     <aside className="w-64 bg-white shadow-sm border-r border-gray-200">
       <div className="p-4">
@@ -53,7 +65,7 @@ const Sidebar = ({ onPageChange }) => {
                 handleMenuClick(item.page);
               }}
               className={`flex items-center px-3 py-2 mt-1 text-sm font-medium rounded-lg transition-colors ${
-                item.active
+                activePage === item.page
                   ? 'bg-blue-100 text-blue-700'
                   : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
               }`}
@@ -74,7 +86,11 @@ const Sidebar = ({ onPageChange }) => {
                 e.preventDefault();
                 handleMenuClick(item.page);
               }}
-              className="flex items-center px-3 py-2 mt-1 text-sm font-medium rounded-lg transition-colors text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+              className={`flex items-center px-3 py-2 mt-1 text-sm font-medium rounded-lg transition-colors ${
+                activePage === item.page
+                  ? 'bg-blue-100 text-blue-700'
+                  : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+              }`}
             >
               <item.icon className="w-5 h-5 mr-3" />
               {item.label}

@@ -36,12 +36,6 @@ const Header = () => {
             <HelpCircle className="h-6 w-6 text-gray-500" />
           </button>
           
-          <button className="p-2 rounded-full hover:bg-gray-100">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
-              MG
-            </div>
-          </button>
-          
           <div className="relative">
             <button 
               onClick={() => setIsProfileOpen(!isProfileOpen)} 
@@ -57,11 +51,44 @@ const Header = () => {
                   <p className="text-sm font-medium text-gray-900">John Doe</p>
                   <p className="text-xs text-gray-500">john.doe@example.com</p>
                 </div>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile</a>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Account Settings</a>
-                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Billing</a>
+                <button 
+                  onClick={() => {
+                    setIsProfileOpen(false);
+                    window.dispatchEvent(new CustomEvent('pageChange', { detail: { page: 'settings' } }));
+                  }}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Your Profile
+                </button>
+                <button 
+                  onClick={() => {
+                    setIsProfileOpen(false);
+                    window.dispatchEvent(new CustomEvent('pageChange', { detail: { page: 'settings' } }));
+                  }}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Account Settings
+                </button>
+                <button 
+                  onClick={() => {
+                    setIsProfileOpen(false);
+                    window.dispatchEvent(new CustomEvent('pageChange', { detail: { page: 'settings' } }));
+                  }}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Billing
+                </button>
                 <div className="border-t border-gray-100">
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+                  <button 
+                    onClick={() => {
+                      setIsProfileOpen(false);
+                      // Handle sign out logic here
+                      alert('Sign out functionality would be implemented here');
+                    }}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Sign out
+                  </button>
                 </div>
               </div>
             )}

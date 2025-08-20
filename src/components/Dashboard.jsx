@@ -49,6 +49,8 @@ const Dashboard = () => {
   if (currentPage === 'settings') {
     return <SettingsPage />;
   }
+
+  // Return to dashboard view for main workflow
   const steps = [
     { id: 1, name: 'Setup & Analysis', icon: TrendingUp, description: 'Configure parameters and analyze trends' },
     { id: 2, name: 'Trend Results', icon: Target, description: 'Review identified trends and market data' },
